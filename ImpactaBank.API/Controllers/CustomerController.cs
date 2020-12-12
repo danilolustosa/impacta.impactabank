@@ -21,7 +21,7 @@ namespace ImpactaBank.API.Controllers
         public CustomerController(ICustomerService service) => _service = service;
 
         [HttpGet("get")]
-        [Authorize]
+        [Authorize(Roles = "A,U")]
         public IActionResult Get([FromQuery] int id)
         {
             var result = _service.Get(id);
@@ -29,7 +29,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpGet("list")]
-        [Authorize]
+        [Authorize(Roles = "A,U")]
         public IActionResult List()
         {
             var result = _service.List();
@@ -38,7 +38,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpPost("insert")]
-        [Authorize]
+        [Authorize(Roles = "A")]
         public IActionResult Insert([FromBody] CustomerRequest request)
         {
             var result = _service.Insert(request);

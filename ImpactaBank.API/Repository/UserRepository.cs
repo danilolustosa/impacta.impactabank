@@ -16,6 +16,7 @@ namespace ImpactaBank.API.Repository
             string query = @"SELECT [Id]
                                   ,[Email]
                                   ,[Password]
+                                  ,[Role]
                               FROM [dbo].[User]
                               WHERE Email = @Email AND Password = @Password";
 
