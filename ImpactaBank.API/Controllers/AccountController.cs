@@ -2,6 +2,7 @@
 using ImpactaBank.API.Interface;
 using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace ImpactaBank.API.Controllers
 
 
         [HttpPost("insert")]
+        [Authorize]
         public IActionResult Insert([FromBody] AccountRequest request)
         {
             var response = _service.Insert(request);
@@ -32,6 +34,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize]
         public IActionResult Update([FromQuery] int id, [FromBody] AccountRequest request)
         {
             var response = _service.Update(id, request);
@@ -39,6 +42,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpPatch("updateSituation")]
+        [Authorize]
         public IActionResult UpdateSituation([FromQuery] int id, [FromBody] AccountSituationRequest request)
         {
             var response = _service.UpdateSituation(id, request);

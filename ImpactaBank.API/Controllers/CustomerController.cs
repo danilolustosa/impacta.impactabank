@@ -2,6 +2,7 @@
 using ImpactaBank.API.Interface;
 using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,6 +21,7 @@ namespace ImpactaBank.API.Controllers
         public CustomerController(ICustomerService service) => _service = service;
 
         [HttpGet("get")]
+        [Authorize]
         public IActionResult Get([FromQuery] int id)
         {
             var result = _service.Get(id);
@@ -27,6 +29,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpGet("list")]
+        [Authorize]
         public IActionResult List()
         {
             var result = _service.List();
@@ -35,6 +38,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpPost("insert")]
+        [Authorize]
         public IActionResult Insert([FromBody] CustomerRequest request)
         {
             var result = _service.Insert(request);
