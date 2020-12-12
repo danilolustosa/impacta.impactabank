@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImpactaBank.API.Model
+namespace ImpactaBank.API.Model.Response
 {
     public class BaseResponse
     {

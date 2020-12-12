@@ -1,4 +1,4 @@
-﻿using ImpactaBank.API.Model;
+﻿using ImpactaBank.API.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;

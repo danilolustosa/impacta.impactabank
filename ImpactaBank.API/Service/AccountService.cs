@@ -1,8 +1,10 @@
-﻿using ImpactaBank.API.Model;
+﻿using ImpactaBank.API.Domain;
 using System;
 using ImpactaBank.API.Util;
 using ImpactaBank.API.Repository;
 using Microsoft.AspNetCore.Http;
+using ImpactaBank.API.Model.Request;
+using ImpactaBank.API.Model.Response;
 
 namespace ImpactaBank.API.Service
 {
@@ -10,21 +12,80 @@ namespace ImpactaBank.API.Service
     {
         AccountRepository _repository = new AccountRepository();
 
-        public BaseResponse Insert(Account request)
+        public BaseResponse Insert(AccountRequest request)
         {
             if (request.CustomerId == 0)
                 return new BaseResponse() { StatusCode = 400, Message = "Customer is empty" };
 
+            if (request.Situation == String.Empty)
+                return new BaseResponse() { StatusCode = 400, Message = "Situation is empty" };
+
             string tokenMd5 = request.CustomerId.ToString() + " - " + DateTime.Now.ToString();
             request.Hash = Util.Util.CreateMD5(tokenMd5);
 
-            int id = _repository.Insert(request);
+
+            // Mapeando REQUEST x DOMAIN
+            Account account = new Account() 
+            { 
+                CustomerId = request.CustomerId,
+                Hash = request.Hash,
+                Situation = request.Situation
+            };
+
+
+            int id = _repository.Insert(account);
             var result = Get(id);
             result.Message = "Account was created.";
             result.StatusCode = StatusCodes.Status201Created;
             return result;
         }
 
+        public BaseResponse Update(int id, AccountRequest request)
+        {
+            if (request.CustomerId == 0)
+                return new BaseResponse() { StatusCode = 400, Message = "Customer is empty" };
+
+            if (request.Hash != String.Empty)
+                return new BaseResponse() { StatusCode = 400, Message = "Hash is not empty" };
+
+            if (request.Situation == String.Empty)
+                return new BaseResponse() { StatusCode = 400, Message = "Situation is empty" };
+
+
+            // Mapeando REQUEST x DOMAIN
+            Account account = new Account()
+            {
+                Id = id,
+                CustomerId = request.CustomerId,
+                Situation = request.Situation
+            };
+
+
+            _repository.Update(account);
+            var result = Get(id);
+            result.Message = "Account was updated.";
+            result.StatusCode = StatusCodes.Status200OK;
+            return result;
+        }
+
+        public BaseResponse UpdateSituation(int id, AccountSituationRequest request)
+        {
+            if (request.Situation == String.Empty)
+                return new BaseResponse() { StatusCode = 400, Message = "Situation is empty" };
+
+            // Mapeando REQUEST x DOMAIN
+            Account account = new Account()
+            {
+                Id = id,                
+                Situation = request.Situation
+            };
+
+            _repository.UpdateSituation(account);
+            var result = Get(id);
+            result.Message = "Account was updated.";
+            result.StatusCode = StatusCodes.Status200OK;
+            return result;
+        }
 
         public BaseResponse Get(int id)
         {
@@ -32,9 +93,18 @@ namespace ImpactaBank.API.Service
                 return new BaseResponse() { StatusCode = 400, Message = "Id is empty" };
 
             var result = _repository.Get(id);
-            result.StatusCode = StatusCodes.Status200OK;
-            result.Message = "OK";
-            return result;
+
+            AccountResponse response = new AccountResponse() 
+            { 
+                CustomerId = result.CustomerId,
+                Hash = result.Hash,
+                Id = result.Id,
+                Situation = result.Situation
+            };
+
+            response.StatusCode = StatusCodes.Status200OK;
+            response.Message = "OK";
+            return response;
         }       
     }
 }

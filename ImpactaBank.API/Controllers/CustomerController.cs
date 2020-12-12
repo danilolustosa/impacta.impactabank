@@ -1,4 +1,5 @@
-﻿using ImpactaBank.API.Model;
+﻿using ImpactaBank.API.Domain;
+using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace ImpactaBank.API.Controllers
         }
 
         [HttpPost("insert")]
-        public IActionResult Insert([FromBody] Customer request)
+        public IActionResult Insert([FromBody] CustomerRequest request)
         {
             var result = _service.Insert(request);
             return new ObjectResult(result) { StatusCode = result.StatusCode };

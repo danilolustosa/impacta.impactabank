@@ -1,4 +1,4 @@
-﻿using ImpactaBank.API.Model;
+﻿using ImpactaBank.API.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

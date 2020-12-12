@@ -1,4 +1,4 @@
-﻿using ImpactaBank.API.Model;
+﻿using ImpactaBank.API.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -14,14 +14,16 @@ namespace ImpactaBank.API.Repository
         {
             string query = @"INSERT INTO [dbo].[Account]
                                    ([Hash]
-                                   ,[CustomerId])
+                                   ,[CustomerId]
+                                   ,[Situation])
                              output INSERTED.Id VALUES
                                    (@Hash
-                                   ,@CustomerId)";
+                                   ,@CustomerId
+                                   ,@Situation)";
 
             var con = new SqlConnection(_connectionString);
             con.Open();
-            return con.ExecuteScalar<int>(query, new { account.Hash, account.CustomerId });
+            return con.ExecuteScalar<int>(query, account);
         }
 
         public Account Get(int Id)
@@ -29,12 +31,38 @@ namespace ImpactaBank.API.Repository
             string query = @"SELECT [Id]
                                   ,[Hash]
                                   ,[CustomerId]
+                                  ,[Situation]
                               FROM[dbo].[Account]
                               WHERE Id = @Id";
 
             var con = new SqlConnection(_connectionString);
             con.Open();
             return con.QueryFirstOrDefault<Account>(query, new { Id });
+        }
+
+        public void Update(Account account)
+        {
+            string query = @"UPDATE [dbo].[Account]
+                               SET [CustomerId] = @CustomerId
+                                  ,[Situation] = @Situation
+                             WHERE Id = @Id";
+
+            var con = new SqlConnection(_connectionString);
+            con.Open();
+            con.ExecuteScalar(query, account);
+
+        }
+
+        public void UpdateSituation(Account account)
+        {
+            string query = @"UPDATE [dbo].[Account]
+                               SET [Situation] = @Situation
+                             WHERE Id = @Id";
+
+            var con = new SqlConnection(_connectionString);
+            con.Open();
+            con.ExecuteScalar(query, account);
+
         }
     }
 }

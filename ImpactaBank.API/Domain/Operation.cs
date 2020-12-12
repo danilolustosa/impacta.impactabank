@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImpactaBank.API.Model
+namespace ImpactaBank.API.Domain
 {
-    public class Operation : BaseResponse
+    public class Operation
     {
         public int Id { get; set; }
         public string Type { get; set; }
