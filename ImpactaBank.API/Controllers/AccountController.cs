@@ -1,4 +1,5 @@
 ﻿using ImpactaBank.API.Domain;
+using ImpactaBank.API.Interface;
 using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,10 @@ namespace ImpactaBank.API.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        public AccountService _service = new AccountService();        
+        private IAccountService _service;
+
+        private AccountController(IAccountService service) => _service = service;
+
 
         [HttpPost("insert")]
         public IActionResult Insert([FromBody] AccountRequest request)

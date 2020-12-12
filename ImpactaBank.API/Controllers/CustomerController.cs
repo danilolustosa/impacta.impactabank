@@ -1,4 +1,5 @@
 ﻿using ImpactaBank.API.Domain;
+using ImpactaBank.API.Interface;
 using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Service;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,9 @@ namespace ImpactaBank.API.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        public CustomerService _service = new CustomerService();
+        private ICustomerService _service;
+
+        public CustomerController(ICustomerService service) => _service = service;
 
         [HttpGet("get")]
         public IActionResult Get([FromQuery] int id)

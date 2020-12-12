@@ -5,12 +5,15 @@ using ImpactaBank.API.Repository;
 using Microsoft.AspNetCore.Http;
 using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Model.Response;
+using ImpactaBank.API.Interface;
 
 namespace ImpactaBank.API.Service
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
-        AccountRepository _repository = new AccountRepository();
+        IAccountRepository _repository;
+
+        public AccountService(IAccountRepository repository) => _repository = repository;
 
         public BaseResponse Insert(AccountRequest request)
         {

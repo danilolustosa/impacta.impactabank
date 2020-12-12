@@ -5,10 +5,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using ImpactaBank.API.Interface;
 
 namespace ImpactaBank.API.Repository
 {
-    public class CustomerRepository : BaseRepository
+    public class CustomerRepository : BaseRepository, ICustomerRepository
     {
         public int Insert(Customer customer)
         {

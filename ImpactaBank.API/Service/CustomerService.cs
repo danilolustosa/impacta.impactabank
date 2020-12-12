@@ -1,4 +1,5 @@
 ﻿using ImpactaBank.API.Domain;
+using ImpactaBank.API.Interface;
 using ImpactaBank.API.Model.Request;
 using ImpactaBank.API.Model.Response;
 using ImpactaBank.API.Repository;
@@ -10,9 +11,11 @@ using System.Threading.Tasks;
 
 namespace ImpactaBank.API.Service
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
-        CustomerRepository _repository = new CustomerRepository();
+        ICustomerRepository _repository;
+
+        public CustomerService(ICustomerRepository repository) => _repository = repository;
 
         public BaseResponse Insert(CustomerRequest request)
         {

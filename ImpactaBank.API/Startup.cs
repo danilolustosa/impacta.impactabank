@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+using ImpactaBank.API.Interface;
+using ImpactaBank.API.Service;
+using ImpactaBank.API.Repository;
 
 namespace ImpactaBank.API
 {
@@ -26,7 +29,7 @@ namespace ImpactaBank.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers();           
 
             services.AddSwaggerGen(swagger => 
             {
@@ -43,6 +46,12 @@ namespace ImpactaBank.API
                     }
                 });
             });
+
+
+            services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<ICustomerService, CustomerService>();
+            services.AddSingleton<ICustomerRepository, CustomerRepository>();
+            services.AddSingleton<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
