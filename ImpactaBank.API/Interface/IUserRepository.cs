@@ -9,5 +9,6 @@ namespace ImpactaBank.API.Interface
     public interface IUserRepository
     {
         User Get(User user);
+        int Insert(User user);
     }
 }

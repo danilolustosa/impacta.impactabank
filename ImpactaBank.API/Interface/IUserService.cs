@@ -1,4 +1,5 @@
-﻿using ImpactaBank.API.Model.Response;
+﻿using ImpactaBank.API.Model.Request;
+using ImpactaBank.API.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace ImpactaBank.API.Interface
     public interface IUserService
     {
         BaseResponse Login(string email, string password);
+        BaseResponse Insert(UserRequest request);
     }
 }

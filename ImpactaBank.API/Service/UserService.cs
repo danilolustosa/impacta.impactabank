@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using ImpactaBank.API.Model.Request;
 
 namespace ImpactaBank.API.Service
 {
@@ -19,6 +20,30 @@ namespace ImpactaBank.API.Service
         private IUserRepository _repository;
 
         public UserService(IUserRepository repository) => _repository = repository;
+
+
+        public BaseResponse Insert(UserRequest request)
+        {
+            if (request.Email == null || request.Email == String.Empty)
+                return new BaseResponse() { StatusCode = StatusCodes.Status400BadRequest, Message = "E-mail is empty" };
+
+            if (request.Password == null || request.Password == String.Empty)
+                return new BaseResponse() { StatusCode = StatusCodes.Status400BadRequest, Message = "Password is empty" };
+
+            if (request.Role == null || request.Role == String.Empty)
+                return new BaseResponse() { StatusCode = StatusCodes.Status400BadRequest, Message = "Role is empty" };
+
+            User user = new User() 
+            { 
+                Email = request.Email,
+                Password = request.Password,
+                Role = request.Role
+            };
+
+            int id = _repository.Insert(user);
+            return new UserResponse() { Id = id, StatusCode = StatusCodes.Status201Created, Message = "User was created" };
+        }
+
 
         public BaseResponse Login(string email, string password)
         {

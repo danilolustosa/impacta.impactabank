@@ -24,5 +24,21 @@ namespace ImpactaBank.API.Repository
             con.Open();
             return con.QueryFirstOrDefault<User>(query, user);
         }
+
+        public int Insert(User user)
+        {
+            string query = @"INSERT INTO [dbo].[User]
+                                   ([Email]
+                                   ,[Password]
+                                   ,[Role])
+                             output INSERTED.Id VALUES
+                                   (@Email
+                                   ,@Password
+                                   ,@Role)";
+
+            var con = new SqlConnection(_connectionString);
+            con.Open();
+            return con.ExecuteScalar<int>(query, user);
+        }
     }
 }

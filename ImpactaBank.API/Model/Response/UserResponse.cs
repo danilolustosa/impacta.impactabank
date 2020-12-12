@@ -7,6 +7,7 @@ namespace ImpactaBank.API.Model.Response
 {
     public class UserResponse : BaseResponse
     {
+        public int Id { get; set; }
         public string Token { get; set; }
     }
 }
