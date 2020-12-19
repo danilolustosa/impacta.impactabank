@@ -5,7 +5,6 @@ using AutoFixture;
 using Xunit;
 using Microsoft.AspNetCore.Http;
 using FluentAssertions;
-using ImpactaBank.API.Domain;
 using NSubstitute;
 using Microsoft.AspNetCore.Mvc;
 

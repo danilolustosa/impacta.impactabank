@@ -17,7 +17,7 @@ namespace ImpactaBank.API.Controllers
     {
         private IAccountService _service;
 
-        private AccountController(IAccountService service) => _service = service;
+        public AccountController(IAccountService service) => _service = service;
 
 
         [HttpPost("insert")]
