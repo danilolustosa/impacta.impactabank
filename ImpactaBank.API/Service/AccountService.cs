@@ -20,7 +20,7 @@ namespace ImpactaBank.API.Service
             if (request.CustomerId == 0)
                 return new BaseResponse() { StatusCode = 400, Message = "Customer is empty" };
 
-            if (request.Situation == String.Empty)
+            if (request.Situation == String.Empty || request.Situation == null)
                 return new BaseResponse() { StatusCode = 400, Message = "Situation is empty" };
 
             string tokenMd5 = request.CustomerId.ToString() + " - " + DateTime.Now.ToString();
@@ -45,13 +45,16 @@ namespace ImpactaBank.API.Service
 
         public BaseResponse Update(int id, AccountRequest request)
         {
+            if (id == 0)
+                return new BaseResponse() { StatusCode = 400, Message = "Id is empty" };
+
             if (request.CustomerId == 0)
                 return new BaseResponse() { StatusCode = 400, Message = "Customer is empty" };
 
-            if (request.Hash != String.Empty)
+            if (request.Hash != null && request.Hash != String.Empty)
                 return new BaseResponse() { StatusCode = 400, Message = "Hash is not empty" };
 
-            if (request.Situation == String.Empty)
+            if (request.Situation == null || request.Situation == String.Empty)
                 return new BaseResponse() { StatusCode = 400, Message = "Situation is empty" };
 
 

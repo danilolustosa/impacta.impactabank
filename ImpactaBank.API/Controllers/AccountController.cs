@@ -33,7 +33,7 @@ namespace ImpactaBank.API.Controllers
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         [Authorize(Roles = "A")]
         public IActionResult Update([FromQuery] int id, [FromBody] AccountRequest request)
         {
@@ -41,7 +41,7 @@ namespace ImpactaBank.API.Controllers
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
 
-        [HttpPost("updateSituation")]
+        [HttpPut("updateSituation")]
         [Authorize(Roles = "A")]
         public IActionResult UpdateSituation([FromQuery] int id, [FromBody] AccountSituationRequest request)
         {
